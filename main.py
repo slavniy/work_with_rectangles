@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from math import cos, sin, pi, sqrt
 font = ImageFont.truetype("Roboto-Regular.ttf", 18, encoding='UTF-8')
-alf = [str(i) for i in range(1, 49 + 1)]
+# Имя в контексте всей буквицы
 alf = list('АБВГДеЕЖSZИiЇћКЛМНОПРСТУƔФXѾЦЧШЩЪЫьҌЮЯЭѠѦѪѨѬѮѰӨѴӔ')
 name = "ВИКТОР"
 # Пустой желтый фон.
@@ -12,8 +12,7 @@ text_padding = 20
 im = Image.new('RGB', (width, height), fon_color)
 draw = ImageDraw.Draw(im)
 n = len(alf)
-xc = width // 2
-yc = height // 2
+xc, yc = width // 2, height // 2
 r_point = (width // 2) - padding
 r_text = (width // 2) - padding + text_padding
 fi = -pi/2
@@ -38,14 +37,16 @@ for i in range(n):
         fill=(text_color),
         font=font
     )
+
+
 for i in range(len(points)):
     for j in range(i + 1, len(points)):
         draw.line((points[i], points[j]), fill='#eee8aa', width=1)
+    x,y = points[i]
+    draw.ellipse((x-2,y-2,x+2,y+2),"#000")
+
 for i in range(len(name_points)):
     for j in range(i + 1, len(name_points)):
         draw.line((name_points[i], name_points[j]), fill='#f00', width=1)
-
-    x,y = points[i]
-    draw.ellipse((x-2,y-2,x+2,y+2),"#000")
 
 im.show()
