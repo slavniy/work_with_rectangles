@@ -1,8 +1,9 @@
 from PIL import Image, ImageDraw, ImageFont
-from math import cos, sin, pi, sqrt
+from math import cos, sin, pi
+from itertools import permutations
 
 
-class NameDrawer:
+class NameKristal:
     def __init__(self):
         self.font = ImageFont.truetype("Roboto-Regular.ttf", 18, encoding='UTF-8')
         self.alf = list('АБВГДеЕЖSZИiЇћКЛМНОПРСТУƔФXѾЦЧШЩЪЫьҌЮЯЭѠѦѪѨѬѮѰӨѴӔ')
@@ -39,10 +40,7 @@ class NameDrawer:
             points.append((x_p, y_p))
             if self.alf[i] in name:
                 name_points.append((x_p, y_p))
-            if self.alf[i] in name:
-                text_color = '#f00'
-            else:
-                text_color = "#000"
+            text_color = '#f00' if self.alf[i] in name else "#000"
             draw.text(
                 (x_t - 5, y_t - 8),
                 self.alf[i],
@@ -71,5 +69,19 @@ class NameDrawer:
         draw.ellipse((0+self.padding,0+self.padding,self.width-self.padding,self.height-self.padding), outline=1)
         im.show()
 
-drawer = NameDrawer()
-drawer.draw_name_kristal('ВИКТОР')
+    def print_name_gates(self, name):
+        for i in range(len(name)):
+            for j in range(i + 1, len(name)):
+                print(name[i]+name[j], end=' ')
+            print()
+    def print_name_portal(self, name):
+        for n in range(3, len(name)):
+            print(f'{n} буквенные комбинации:')
+            for comb in permutations(name, n):
+                print(''.join(comb), end=' ')
+            print()
+
+drawer = NameKristal()
+drawer.draw_name_in_letter_context('БОРИС')
+drawer.print_name_gates('ФеЛИКС')
+drawer.print_name_portal('ФеЛИКС')
